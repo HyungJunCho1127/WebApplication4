@@ -1,0 +1,40 @@
+﻿@model WebApplication4.Models.User
+
+@{
+    ViewBag.Title = "Email";
+}
+@using (Html.BeginForm("SendEmail", "Home", Model))
+
+{<div>
+
+        <hr />
+        <dl class="dl-horizontal">
+
+            <h2>Upload Vaccination Documents</h2>
+            <body>
+                <br />
+                <label>User ID</label>
+                @Html.DisplayFor(model => model.Id)
+                <br />
+                <label>User Name : </label>
+                @Html.DisplayFor(model => model.UserName)
+                <br />
+                <label>Email : </label>
+                @Html.DisplayFor(model => model.Email)
+                <br />
+                <div class="form-group">
+                    Email<br />
+
+                    <br />
+                    <input type="submit" name="SendEmail" value="Send" class="btn btn-danger" />
+                </div>
+
+            </body>
+
+
+
+    </div>
+
+
+}</dl>
+</div>

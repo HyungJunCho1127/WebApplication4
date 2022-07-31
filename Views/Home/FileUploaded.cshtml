@@ -1,0 +1,29 @@
+﻿@model WebApplication4.Models.User
+
+@{
+    ViewBag.Title = "FileUploaded";
+}
+@using (Html.BeginForm("FileUploaded", "Home", Model))
+
+{<div>
+
+        <hr />
+        <dl class="dl-horizontal">
+
+            <h2>Files Uploaded</h2>
+            <body>
+                <br />
+                @Html.ActionLink("Back To Home", "Index", "Home")
+                <br />
+            </body>
+                <br />
+
+
+
+                </div>
+
+            
+
+
+}</dl>
+</div>

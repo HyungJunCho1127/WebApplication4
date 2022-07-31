@@ -1,0 +1,29 @@
+﻿@model WebApplication4.Models.User
+
+@{
+    ViewBag.Title = "PetAdded";
+}
+@using (Html.BeginForm("PetAdded", "Home", Model))
+
+{<div>
+
+        <hr />
+        <dl class="dl-horizontal">
+
+            <h2>Pet Added</h2>
+            <body>
+                <br />
+                @Html.ActionLink("Back To Home", "Index", "Home", Model, null)
+                <br />
+            </body>
+            <br />
+
+
+
+    </div>
+
+
+
+
+}</dl>
+</div>

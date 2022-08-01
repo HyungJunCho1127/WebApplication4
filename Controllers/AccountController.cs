@@ -41,7 +41,9 @@ namespace WebApplication4.Controllers
                 String email = collection[2];
                 String password = collection[3];
 
-                using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"))
+                using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
+                        C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;Multipl
+                            eActiveResultSets=True;Application Name=EntityFramework"))
                 {
                     String query = "INSERT INTO Account (Username,Password, Email) VALUES (@Username,@Password, @Email)";
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -78,7 +80,9 @@ namespace WebApplication4.Controllers
                 string username = collection[1];
                 string password = collection[2];
 
-                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
+                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
+                        C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;
+                            MultipleActiveResultSets=True;Application Name=EntityFramework");
 
                 string query = "";
                 query = "SELECT * FROM Account WHERE Username = '" + username + "' AND Password = '" + password + "'";
@@ -135,7 +139,9 @@ namespace WebApplication4.Controllers
         public int GetUserID(string userName, string password)
         {
             int userId = 0;
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
+            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
+                C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;
+                MultipleActiveResultSets=True;Application Name=EntityFramework");
             string query = "SELECT * FROM Account WHERE Username = '" + userName + "' AND Password = '" + password + "'";
             SqlCommand command = new SqlCommand(query, connection);
             SqlDataReader reader;

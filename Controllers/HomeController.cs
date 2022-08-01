@@ -21,14 +21,12 @@ namespace WebApplication4.Controllers
     {
         public ActionResult Index(Models.User user)
         {
-
             return View(user); ;
         }
 
         // GET: Home/Create
         public ActionResult Email(Models.User user)
         {
-
             return View(user);
         }
         // POST: Home/Create
@@ -52,7 +50,6 @@ namespace WebApplication4.Controllers
                     smtp.Send(mail);
                 }
             }
-
             return View("EmailSent", user);
         }
 
@@ -64,7 +61,6 @@ namespace WebApplication4.Controllers
         [HttpGet]
         public ActionResult Upload(Models.User user)
         {
-
             return View(user);
         }
 
@@ -78,7 +74,6 @@ namespace WebApplication4.Controllers
             image.ImageFile.SaveAs(fileName);
             using (Model1 model1 = new Model1())
             {
-
                 model1.Images.Add(image);
                 model1.SaveChanges();
             }
@@ -87,10 +82,8 @@ namespace WebApplication4.Controllers
         }
         public ActionResult AddPets()
         {
-
             return View(); ;
         }
-
         public ActionResult PetAdd(Models.User user, FormCollection collection)
         {
             Models.Pet pet = new Models.Pet();
@@ -103,27 +96,21 @@ namespace WebApplication4.Controllers
                 pet.PetName = petName;
                 pet.PetBreed = petBreed;
                 int userId = user.Id;
-
-
                 using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"))
                 {
                     String query = "INSERT INTO Pets (Id,PetName, PetBreed) VALUES (@Id,@PetName, @PetBreed)";
-
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Id", userId);
                         command.Parameters.AddWithValue("@PetName", petName);
                         command.Parameters.AddWithValue("@PetBreed", petBreed);
-
                         connection.Open();
                         int result = command.ExecuteNonQuery();
-
                         // Check Error
                         if (result < 0)
                             Console.WriteLine("Error inserting data into Database!");
                     }
                 }
-
                 return View("PetAdded", user);
             }
             catch
@@ -132,31 +119,23 @@ namespace WebApplication4.Controllers
             }
 
         }
-
         public ActionResult PetAdded(Models.User user)
         {
             return View("PetAdded", user);
         }
-
         public ActionResult PieChart()
         {
             var masterModel = new HomeIndexVM();
-
             // fill pie chart with info
             var pieChartData = GetPieChartData();
-
             masterModel.PieChartData = pieChartData;
-
-
             return View(masterModel);
         }
-
 
         // get the data for the pie chart
         private PieChartVM GetPieChartData()
         {
             PieChartVM model = new PieChartVM();
-
             List<string> labels = new List<string>();
             labels.Add("Pomeranian");
             labels.Add("Bulldog");
@@ -167,17 +146,11 @@ namespace WebApplication4.Controllers
             labels.Add("Poodle");
             labels.Add("Husky");
             labels.Add("Pug");
-
             model.labels = labels;
-
             List<PieChartChildVM> datasets = new List<PieChartChildVM>();
             PieChartChildVM piechart = new PieChartChildVM();
-
             List<string> backgroundColorList = new List<string>();
             List<int> dataList = new List<int>();
-            
-
-
                     foreach (string label in labels)
             {
                 if (label == "Pomeranian")
@@ -225,29 +198,23 @@ namespace WebApplication4.Controllers
                     backgroundColorList.Add("#827B60");
                     dataList.Add(GetPugDataCount());
                 }
-
             }
-            
             piechart.backgroundColor = backgroundColorList;
             piechart.data = dataList;
             datasets.Add(piechart);
             model.datasets = datasets;
-
             return model;
         }
 
         public int GetPomeranianDataCount()
         {
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
-
             int number = 0;
-            ;
             String query = "SELECT COUNT(PetBreed) FROM Pets WHERE PetBreed = \'Pomeranian\'";
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 SqlDataReader reader;
-
                 try
                 {
                     connection.Open();
@@ -260,10 +227,8 @@ namespace WebApplication4.Controllers
                 }
                 catch
                 {
-
                 }
             }
-
             return number;
             }
 
@@ -272,13 +237,11 @@ namespace WebApplication4.Controllers
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
 
             int number = 0;
-            ;
             String query = "SELECT COUNT(PetBreed) FROM Pets WHERE PetBreed = \'Bulldog\'";
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 SqlDataReader reader;
-
                 try
                 {
                     connection.Open();
@@ -291,25 +254,19 @@ namespace WebApplication4.Controllers
                 }
                 catch
                 {
-
                 }
             }
-
             return number;
         }
 
         public int GetShortHairDataCount()
         {
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
-
             int number = 0;
-            ;
             String query = "SELECT COUNT(PetBreed) FROM Pets WHERE PetBreed = \'British Shorthair\'";
-
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 SqlDataReader reader;
-
                 try
                 {
                     connection.Open();
@@ -322,30 +279,23 @@ namespace WebApplication4.Controllers
                 }
                 catch
                 {
-
                 }
             }
-
             return number;
         }
 
         public int GetSiameseDataCount()
         {
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
-
             int number = 0;
-            ;
             String query = "SELECT COUNT(PetBreed) FROM Pets WHERE PetBreed = \'Siamese\'";
-
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 SqlDataReader reader;
-
                 try
                 {
                     connection.Open();
                     reader = command.ExecuteReader();
-
                     if (reader.Read())
                     {
                         number = int.Parse(reader[0].ToString());
@@ -353,25 +303,20 @@ namespace WebApplication4.Controllers
                 }
                 catch
                 {
-
                 }
             }
-
             return number;
         }
 
         public int GetShepardDataCount()
         {
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
-
             int number = 0;
-            ;
             String query = "SELECT COUNT(PetBreed) FROM Pets WHERE PetBreed = \'German Shepherd\'";
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 SqlDataReader reader;
-
                 try
                 {
                     connection.Open();
@@ -384,24 +329,19 @@ namespace WebApplication4.Controllers
                 }
                 catch
                 {
-
                 }
             }
-
             return number;
         }
         public int GetRetrieverDataCount()
         {
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
-
             int number = 0;
-            ;
             String query = "SELECT COUNT(PetBreed) FROM Pets WHERE PetBreed = \'Golden Retriever\'";
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 SqlDataReader reader;
-
                 try
                 {
                     connection.Open();
@@ -414,10 +354,8 @@ namespace WebApplication4.Controllers
                 }
                 catch
                 {
-
                 }
             }
-
             return number;
         }
 
@@ -426,13 +364,10 @@ namespace WebApplication4.Controllers
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
 
             int number = 0;
-            ;
             String query = "SELECT COUNT(PetBreed) FROM Pets WHERE PetBreed = \'Poodle\'";
-
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 SqlDataReader reader;
-
                 try
                 {
                     connection.Open();
@@ -445,25 +380,19 @@ namespace WebApplication4.Controllers
                 }
                 catch
                 {
-
                 }
             }
-
             return number;
         }
 
         public int GetHuskyDataCount()
         {
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
-
             int number = 0;
-            ;
             String query = "SELECT COUNT(PetBreed) FROM Pets WHERE PetBreed = \'Husky\'";
-
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 SqlDataReader reader;
-
                 try
                 {
                     connection.Open();
@@ -476,24 +405,18 @@ namespace WebApplication4.Controllers
                 }
                 catch
                 {
-
                 }
             }
-
             return number;
         }
         public int GetPugDataCount()
         {
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
-
             int number = 0;
-            ;
             String query = "SELECT COUNT(PetBreed) FROM Pets WHERE PetBreed = \'Pug\'";
-
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 SqlDataReader reader;
-
                 try
                 {
                     connection.Open();
@@ -506,12 +429,9 @@ namespace WebApplication4.Controllers
                 }
                 catch
                 {
-
                 }
             }
-
             return number;
         }
-
     } 
 }

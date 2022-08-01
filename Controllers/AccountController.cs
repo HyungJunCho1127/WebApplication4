@@ -29,8 +29,6 @@ namespace WebApplication4.Controllers
             Models.User user = new Models.User();
             try
             {
-
-                //Method 2: Using Component Index Position
                 ViewData["UserName"] = collection[1];
                 ViewData["Email"] = collection[2];
                 ViewData["Password"] = collection[3];
@@ -46,16 +44,13 @@ namespace WebApplication4.Controllers
                 using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"))
                 {
                     String query = "INSERT INTO Account (Username,Password, Email) VALUES (@Username,@Password, @Email)";
-
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Username", username);
                         command.Parameters.AddWithValue("@Email", email);
                         command.Parameters.AddWithValue("@Password", password);
-
                         connection.Open();
                         int result = command.ExecuteNonQuery();
-
                         // Check Error
                         if (result < 0)
                             Console.WriteLine("Error inserting data into Database!");
@@ -64,7 +59,6 @@ namespace WebApplication4.Controllers
                 int userId = GetUserID(username, password);
                 user.Id = userId;
                 return View("~/Views/Home/Index.cshtml", user);
-
             }
             catch
             {
@@ -79,17 +73,14 @@ namespace WebApplication4.Controllers
             ViewResult view = new ViewResult();
             try
             {
-
                 ViewData["UserName"] = collection[1];
                 ViewData["Password"] = collection[2];
-
-
-                String username = collection[1];
-                String password = collection[2];
+                string username = collection[1];
+                string password = collection[2];
 
                 SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
 
-                String query = "";
+                string query = "";
                 query = "SELECT * FROM Account WHERE Username = '" + username + "' AND Password = '" + password + "'";
 
                 SqlCommand command = new SqlCommand(query, connection);
@@ -115,24 +106,17 @@ namespace WebApplication4.Controllers
 
                         } else
                         {
-
                         }
-
-
-
                     }
                     else
                     {
                         // THIS ONE!!!!!
                         view = View("LoginFailed");
                     }
-
                 }
                 catch
                 {
-
                 }
-                // this one issue
                 return view;
 
             }
@@ -145,7 +129,6 @@ namespace WebApplication4.Controllers
 
         public ActionResult LoginFailed()
         {
-
             return View("LoginFailed");
         }
 
@@ -153,14 +136,9 @@ namespace WebApplication4.Controllers
         {
             int userId = 0;
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
-
-            String query = "SELECT * FROM Account WHERE Username = '" + userName + "' AND Password = '" + password + "'";
-
-
+            string query = "SELECT * FROM Account WHERE Username = '" + userName + "' AND Password = '" + password + "'";
             SqlCommand command = new SqlCommand(query, connection);
-
             SqlDataReader reader;
-
             try
             {
                 connection.Open();
@@ -171,19 +149,13 @@ namespace WebApplication4.Controllers
                     if (userName == reader[1].ToString() && password == reader[2].ToString())
                     {
                         userId = int.Parse(reader[0].ToString());
-
                     }
                     else
                     {
-
                     }
-
-
-
                 }
                 else
                 {
-
                 }
                 return userId;
             } catch

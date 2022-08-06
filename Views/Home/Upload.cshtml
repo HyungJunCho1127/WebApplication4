@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
-@using (Html.BeginForm("FileUpload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using(Html.BeginForm("FileUpload", "Home", Model , FormMethod.Post, new { enctype = "multipart/form-data" }))
 
 {<div>
 

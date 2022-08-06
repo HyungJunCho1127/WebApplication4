@@ -15,7 +15,8 @@ namespace WebApplication4.Controllers
         
         public ActionResult Index(Models.User user)
         {
-           
+            AccountController account = new AccountController();
+            user.List = account.GetPetsList(user.Id);
             return View(user); ;
         }
 
@@ -61,18 +62,29 @@ namespace WebApplication4.Controllers
 
         public ActionResult FileUpload(Models.User user, Image image)
         {
+            
             string fileName = Path.GetFileNameWithoutExtension(image.ImageFile.FileName);
             string extension = Path.GetExtension(image.ImageFile.FileName);
             image.Image1 = "../Image/" + fileName;
-            image.Id = int.Parse(user.Id.ToString());
-            fileName = Path.Combine(Server.MapPath("~/Image/"), fileName + ".png");
-            image.ImageFile.SaveAs(fileName);
-            using (Model1 model1 = new Model1())
+            image.Id = user.Id;
+            string newfileName = Path.Combine(Server.MapPath("~/Image/"), fileName + ".png");
+            image.ImageFile.SaveAs(newfileName);
+            Connection connectionString = new Connection();
+            using (SqlConnection connection = new SqlConnection(connectionString.GetConnection()))
             {
-                model1.Images.Add(image);
-                model1.SaveChanges();
+                // using parameters add with value to protect against SQL injection
+                String query = "INSERT INTO Image (Id, Image1) VALUES (@Id, @Image1)";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", user.Id);
+                    command.Parameters.AddWithValue("@Image1", fileName + ".png");
+                    connection.Open();
+                    int result = command.ExecuteNonQuery();
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                }
             }
-            ModelState.Clear();
             return View("FileUploaded", user);
         }
         

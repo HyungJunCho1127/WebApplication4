@@ -1,16 +1,16 @@
 ﻿@model WebApplication4.Models.User
 
 @{
-    ViewBag.Title = "BookPetVetClinic";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Title = "AdminEmail";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Admin Email</h2>
+<h2>Send all users Email</h2>
 
 
 <html>
 <body>
-    @using (Html.BeginForm("BookPetVetClinicEmail", "Vet", FormMethod.Post, Model))
+    @using (Html.BeginForm("SendAllUsersEmail", "Admin", FormMethod.Post, Model))
     {
         @Html.TextArea("emailBody", new { @class = "form-control", @rows = 20, @columns = 10 })
         <br />

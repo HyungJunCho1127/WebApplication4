@@ -36,9 +36,11 @@ namespace WebApplication4.Controllers
                 String username = collection[1];
                 String email = collection[2];
                 String password = collection[3];
-
-                using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"))
+                Connection connectionString = new Connection();
+                
+                using (SqlConnection connection = new SqlConnection(connectionString.GetConnection()))
                 {
+                    // using parameters add with value to protect against SQL injection
                     String query = "INSERT INTO Account (Username,Password, Email, UserType) VALUES (@Username,@Password, @Email, @UserType)";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -76,15 +78,14 @@ namespace WebApplication4.Controllers
                 string username = collection[1];
                 string password = collection[2];
 
-                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-                        C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;
-                            MultipleActiveResultSets=True;Application Name=EntityFramework");
+                Connection connectionString = new Connection();
+                SqlConnection connection = new SqlConnection(connectionString.GetConnection());
 
-                string query = "";
-                query = "SELECT * FROM Account WHERE Username = '" + username + "' AND Password = '" + password + "'";
-
+                string query = "SELECT * FROM Account WHERE Username = @username AND Password = @password";
+                // using parameters add with value to protect against SQL injection
                 SqlCommand command = new SqlCommand(query, connection);
-
+                command.Parameters.AddWithValue("@username", username);
+                command.Parameters.AddWithValue("@password", password);
                 SqlDataReader reader;
 
                 try
@@ -110,6 +111,7 @@ namespace WebApplication4.Controllers
                                 user.Id = int.Parse(reader[0].ToString());
                                 user.UserName = collection[1];
                                 user.Email = reader[3].ToString();
+                                user.UserList = GetUserList();
                                 view = View("~/Views/Admin/Index.cshtml", user);
                             }
 
@@ -146,11 +148,13 @@ namespace WebApplication4.Controllers
         public int GetUserID(string userName, string password)
         {
             int userId = 0;
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-                C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;
-                MultipleActiveResultSets=True;Application Name=EntityFramework");
-            string query = "SELECT * FROM Account WHERE Username = '" + userName + "' AND Password = '" + password + "'";
+            Connection connectionString = new Connection();
+            SqlConnection connection = new SqlConnection(connectionString.GetConnection());
+
+            string query = "SELECT * FROM Account WHERE Username = @username AND Password = @password";
             SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@username", userName);
+            command.Parameters.AddWithValue("@password", password);
             SqlDataReader reader;
             try
             {
@@ -184,12 +188,13 @@ namespace WebApplication4.Controllers
             string vacc = "";
             string date = "";
             List<PetModel> list = new List<PetModel>();
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-            C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;
-            MultipleActiveResultSets=True;Application Name=EntityFramework");
-            String query = "SELECT * FROM Pets WHERE Id = \'" + id + "\'";
+            Connection connectionString = new Connection();
+            SqlConnection connection = new SqlConnection(connectionString.GetConnection());
+            String query = "SELECT * FROM Pets WHERE Id = @Id";
+
             using (SqlCommand command = new SqlCommand(query, connection))
             {
+                command.Parameters.AddWithValue("@Id", id);
                 SqlDataReader reader;
                 try
                 {
@@ -212,6 +217,41 @@ namespace WebApplication4.Controllers
                         }
 
                         PetModel details = new PetModel(name, breed, vacc, date);
+                        list.Add(details);
+                    }
+
+                }
+                catch
+                {
+                }
+            }
+            return list;
+        }
+
+        public List<UserModel> GetUserList()
+        {
+            string id = " ";
+            string userName = " ";
+            string email = "";
+            List<UserModel> list = new List<UserModel>();
+            Connection connectionString = new Connection();
+            SqlConnection connection = new SqlConnection(connectionString.GetConnection());
+            String query = "SELECT * FROM Account WHERE UserType = \'User\'";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                SqlDataReader reader;
+                try
+                {
+                    connection.Open();
+                    reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        id = reader["Id"].ToString();
+                        userName = reader["Username"].ToString();
+                        email = reader["Email"].ToString();
+
+                        UserModel details = new UserModel(id, userName, email);
                         list.Add(details);
                     }
 

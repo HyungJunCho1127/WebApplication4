@@ -1,11 +1,22 @@
 ﻿@model WebApplication4.Models.User
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
 }
 
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-style: double;
+    }
+
+    th, td {
+        background-color: #DCDCDC;
+        padding: 5px;
+    }
+</style>
 <div>
 
     <hr />
@@ -13,27 +24,23 @@
         <body>
             <h2>Home Page</h2>
 
-
             <label>Welcome </label>
-            @Html.DisplayFor(model => model.UserName)
             <br />
-            <table border="1">
+            <table style="width:100%">
                 <thread>
                     <tr>
-                        <th>Pet Name</th>
-                        <th>Pet Breed</th>
-                        <th>Pet Vaccination</th>
-                        <th>Pet Vaccination Date</th>
+                        <th> Id </th>
+                        <th> Username </th>
+                        <th> Email </th>
                     </tr>
                 </thread>
                 <tbody>
-                    @foreach (var item in Model.List)
+                    @foreach (var item in Model.UserList)
                     {
                         <tr>
-                            <th>@item.PetName</th>
-                            <th>@item.PetBreed</th>
-                            <th>@item.Vaccination</th>
-                            <th>@item.VaccinationDate</th>
+                            <td>@item.Id</td>
+                            <td>@item.UserName</td>
+                            <td>@item.Email</td>
                         </tr>
                     }
                 </tbody>
@@ -42,8 +49,8 @@
         </body>
 
 
-    </dl>
+
 </div>
 
 
-    
+

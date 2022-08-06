@@ -26,14 +26,14 @@ namespace WebApplication4.Controllers
             try
             {
                 int userId = int.Parse(user.Id.ToString());
-                using (SqlConnection connection = new SqlConnection(
-                    @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-                    C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;
-                    Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"))
+
+                Connection connectionString = new Connection();
+                using (SqlConnection connection = new SqlConnection(connectionString.GetConnection()))
                 {
                     if (vaccination == "Yes")
                     {
                         DateTime date = SetDates(year, month, day);
+                        // protection against SQL injection using @parameter
                         String query = "INSERT INTO Pets (Id,PetName, PetBreed, FirstVaccination, FirstVaccinationDate)" +
                             " VALUES (@Id,@PetName, @PetBreed, @FirstVaccination, @FirstVaccinationDate)";
                         using (SqlCommand command = new SqlCommand(query, connection))
@@ -53,6 +53,7 @@ namespace WebApplication4.Controllers
 
                     if (vaccination == "No")
                     {
+                        // protection against SQL injection using @parameter
                         String query = "INSERT INTO Pets (Id,PetName, PetBreed) VALUES (@Id,@PetName, @PetBreed)";
                         using (SqlCommand command = new SqlCommand(query, connection))
                         {
@@ -251,11 +252,10 @@ namespace WebApplication4.Controllers
 
         public int GetDataCount(string breed)
         {
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)
-            \MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\
-            App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;
-            Application Name=EntityFramework");
+            Connection connectionString = new Connection();
+            SqlConnection connection = new SqlConnection(connectionString.GetConnection());
             int number = 0;
+            //no need for parameters are declared.
             String query = "SELECT COUNT(PetBreed) FROM Pets WHERE PetBreed = \'"+ breed + "\'";
 
             using (SqlCommand command = new SqlCommand(query, connection))
@@ -319,10 +319,10 @@ namespace WebApplication4.Controllers
 
         public int GetVaccinationCount(string word)
         {
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-            C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;
-            MultipleActiveResultSets=True;Application Name=EntityFramework");
+            Connection connectionString = new Connection();
+            SqlConnection connection = new SqlConnection(connectionString.GetConnection());
             int number = 0;
+            //no need for parameters are declared.
             String query = "SELECT COUNT(FirstVaccination) FROM Pets WHERE FirstVaccination = \'"+ word + "\'";
             using (SqlCommand command = new SqlCommand(query, connection))
             {

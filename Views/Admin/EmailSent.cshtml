@@ -1,0 +1,28 @@
+﻿@model WebApplication4.Models.User
+
+@{
+    ViewBag.Title = "EmailSent";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("EmailSent", "Admin", Model))
+
+{<div>
+
+        <hr />
+        <dl class="dl-horizontal">
+
+            <h2>Email Sent</h2>
+            <body>
+                <br />
+                @Html.ActionLink("Back To Home", "Index", "Admin", Model, null)
+                <br />
+            </body>
+                <br />
+
+
+
+                </div>
+           
+
+}</dl>
+</div>

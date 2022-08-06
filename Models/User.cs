@@ -61,5 +61,7 @@ namespace WebApplication4.Models
         public PieChartVM PieChartData { get; set; }
 
         public List<PetModel> List { get; set; }
+
+        public List<UserModel> UserList { get; set; }
     }
 }

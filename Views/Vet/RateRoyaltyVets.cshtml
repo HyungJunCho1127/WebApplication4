@@ -11,7 +11,7 @@
     <title>Page Title</title>
 </head>
 <body>
-    @using (Html.BeginForm("RoyaltyVetsRate", "Vet", Model, FormMethod.Post, null))
+    @using (Html.BeginForm("RoyaltyVetsRate", "Vet", Model, FormMethod.Post))
     {
         @Html.DropDownList("rating",
         Enumerable.Range(1, 10).Select(i => new SelectListItem

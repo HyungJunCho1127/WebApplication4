@@ -18,12 +18,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Home", "Index", "Home", Model, new { @class = "navbar-brand" })
+                @Html.ActionLink("Home", "Index", "Admin", Model, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Pets", "Index", "Pet", Model, null)</li>
-                    <li>@Html.ActionLink("Vets", "Index", "Vet", Model, null)</li>
                     <li>@Html.ActionLink("Log Out", "Login", "Account", Model, null)</li>
                 </ul>
             </div>

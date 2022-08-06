@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Data.SqlClient;
 using System.Net.Mail;
 using System.Net;
+using WebApplication4.Models;
 
 namespace WebApplication4.Controllers
 {
@@ -16,102 +17,22 @@ namespace WebApplication4.Controllers
 
         public ActionResult Vet(Models.User user)
         {
-            user.RoyaltyVets = RoyaltyVetRating();
-            user.PetVetClub = PetVetClubRating();
-            user.CareVeterinary = CareVeterinaryRating();
-            user.PetVetClinic = PetVetClinicRating();
+            user.RoyaltyVets = VetRating("royaltyvets");
+            user.PetVetClub = VetRating("petvetclub");
+            user.CareVeterinary = VetRating("careveterinary");
+            user.PetVetClinic = VetRating("petvetclinic");
 
             return View(user);
         }
 
-        public int RoyaltyVetRating()
+        public int VetRating(string vet)
         {
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-            C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;
-            MultipleActiveResultSets=True;Application Name=EntityFramework");
+            Connection connectionString = new Connection();
+            SqlConnection connection = new SqlConnection(connectionString.GetConnection());
+            
             int number = 0;
-            String query = "SELECT AVG(VetRating) FROM Vet WHERE VetName = \'royaltyvets\'";
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
-                SqlDataReader reader;
-                try
-                {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        number = int.Parse(reader[0].ToString());
-                    }
-                }
-                catch
-                {
-                }
-            }
-            return number;
-        }
-
-        public int PetVetClubRating()
-        {
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-            C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;
-            MultipleActiveResultSets=True;Application Name=EntityFramework");
-            int number = 0;
-            String query = "SELECT AVG(VetRating) FROM Vet WHERE VetName = \'petvetclub\'";
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
-                SqlDataReader reader;
-                try
-                {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        number = int.Parse(reader[0].ToString());
-                    }
-                }
-                catch
-                {
-                }
-            }
-            return number;
-        }
-
-        public int CareVeterinaryRating()
-        {
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-            C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;
-            MultipleActiveResultSets=True;Application Name=EntityFramework");
-            int number = 0;
-            String query = "SELECT AVG(VetRating) FROM Vet WHERE VetName = \'careveterinary\'";
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
-                SqlDataReader reader;
-                try
-                {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        number = int.Parse(reader[0].ToString());
-                    }
-                }
-                catch
-                {
-                }
-            }
-            return number;
-        }
-
-        public int PetVetClinicRating()
-        {
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-            C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;
-            MultipleActiveResultSets=True;Application Name=EntityFramework");
-            int number = 0;
-            String query = "SELECT AVG(VetRating) FROM Vet WHERE VetName = \'petvetclinic\'";
+            //no need for parameters are declared.
+            String query = "SELECT AVG(VetRating) FROM Vet WHERE VetName = \'"+ vet + "\'";
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 SqlDataReader reader;
@@ -156,7 +77,7 @@ namespace WebApplication4.Controllers
                     smtp.Send(mail);
                 }
             }
-            return View("~/Views/Home/EmailSent.cshtml", user);
+            return View("EmailSent", user);
         }
 
         public ActionResult BookPetVetClub(Models.User user)
@@ -183,7 +104,7 @@ namespace WebApplication4.Controllers
                     smtp.Send(mail);
                 }
             }
-            return View("~/Views/Home/EmailSent.cshtml", user);
+            return View("EmailSent", user);
         }
 
         public ActionResult BookPetVetClinic(Models.User user)
@@ -210,7 +131,7 @@ namespace WebApplication4.Controllers
                     smtp.Send(mail);
                 }
             }
-            return View("~/Views/Home/EmailSent.cshtml", user);
+            return View("EmailSent", user);
         }
 
         public ActionResult BookCareVeterinary(Models.User user)
@@ -237,7 +158,7 @@ namespace WebApplication4.Controllers
                     smtp.Send(mail);
                 }
             }
-            return View("~/Views/Home/EmailSent.cshtml", user);
+            return View("EmailSent", user);
         }
 
 
@@ -253,10 +174,8 @@ namespace WebApplication4.Controllers
         public ActionResult RoyaltyVetsRate(string rating, Models.User user)
         {
             int vetRating = int.Parse(rating);
-            using (SqlConnection connection = new SqlConnection
-                (@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-                C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;
-                Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"))
+            Connection connectionString = new Connection();
+            using (SqlConnection connection = new SqlConnection(connectionString.GetConnection()))
             {
                 String query = "INSERT INTO Vet (VetName,VetRating) VALUES (@VetName,@VetRating)";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -280,10 +199,8 @@ namespace WebApplication4.Controllers
         public ActionResult CareVeterinaryRate(string rating, Models.User user)
         {
             int vetRating = int.Parse(rating);
-            using (SqlConnection connection = new SqlConnection
-                (@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-                C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;
-                Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"))
+            Connection connectionString = new Connection();
+            using (SqlConnection connection = new SqlConnection(connectionString.GetConnection()))
             {
                 String query = "INSERT INTO Vet (VetName,VetRating) VALUES (@VetName,@VetRating)";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -308,10 +225,8 @@ namespace WebApplication4.Controllers
         public ActionResult PetVetClinicRate(string rating, Models.User user)
         {
             int vetRating = int.Parse(rating);
-            using (SqlConnection connection = new SqlConnection
-                (@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-                C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;
-                Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"))
+            Connection connectionString = new Connection();
+            using (SqlConnection connection = new SqlConnection(connectionString.GetConnection()))
             {
                 String query = "INSERT INTO Vet (VetName,VetRating) VALUES (@VetName,@VetRating)";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -336,10 +251,8 @@ namespace WebApplication4.Controllers
         public ActionResult PetVetClubRate(string rating, Models.User user)
         {
             int vetRating = int.Parse(rating);
-            using (SqlConnection connection = new SqlConnection
-                (@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-                C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;
-                Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"))
+            Connection connectionString = new Connection();
+            using (SqlConnection connection = new SqlConnection(connectionString.GetConnection()))
             {
                 String query = "INSERT INTO Vet (VetName,VetRating) VALUES (@VetName,@VetRating)";
                 using (SqlCommand command = new SqlCommand(query, connection))

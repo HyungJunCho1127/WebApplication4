@@ -10,7 +10,7 @@
 
 <html>
 <body>
-    @using (Html.BeginForm("BookCareVeterinaryEmail", "Vet", FormMethod.Post, Model))
+    @using (Html.BeginForm("BookCareVeterinaryEmail", "Vet", Model, FormMethod.Post))
     {
         @Html.TextArea("emailBody", new { @class = "form-control", @rows = 20, @columns = 10 })
         <br />

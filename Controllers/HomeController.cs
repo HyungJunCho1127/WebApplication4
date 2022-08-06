@@ -15,7 +15,10 @@ namespace WebApplication4.Controllers
         
         public ActionResult Index(Models.User user)
         {
-           
+            AccountController account = new AccountController();
+            user.List = account.GetPetsList(user.Id);
+
+
             return View(user); ;
         }
 

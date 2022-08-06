@@ -6,36 +6,34 @@
 
 <h2>Create New Account</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        <form action="/action_page.php">
-            <label for="username">Username</label>
-            <br />
-            <input type="text" id="username" name="username" required>
-            <br />
-            <label for="email">Email</label>
-            <br />
-            <input type="text" id="email" name="email" required>
-            <br />
-            <label for="password">Password</label>
-            <br />
-            <input type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                   title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
 
-        </form>
-    </div>
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <form action="/action_page.php">
+                <label for="username">Username</label>
+                <br />
+                <input type="text" id="username" name="username" required>
+                <br />
+                <label for="email">Email</label>
+                <br />
+                <input type="text" id="email" name="email" required>
+                <br />
+                <label for="password">Password</label>
+                <br />
+                <input type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            </form>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
         </div>
     </div>
-</div>
 }
-

@@ -1,0 +1,32 @@
+﻿@model WebApplication4.Models.User
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+}
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+
+        <h2>Home Page</h2>
+        <body>
+
+            <label>User Name : </label>
+            @Html.DisplayFor(model => model.UserName)
+            <br />
+            <label>Email : </label>
+            @Html.DisplayFor(model => model.Email)
+            <br />
+            @Html.ActionLink("View Partnered Vets", "Vet", "Vet", Model, null)
+            <br />
+        </body>
+
+
+    </dl>
+</div>
+
+
+    

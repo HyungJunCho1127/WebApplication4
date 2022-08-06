@@ -1,0 +1,68 @@
+﻿@model WebApplication4.Models.User
+
+@{
+    ViewBag.Title = "AddPets";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+
+@using (Html.BeginForm("PetAdd", "Pet", Model, FormMethod.Post, null))
+{
+    <div class="form-horizontal">
+        <h2>Add Pet</h2>
+        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <label for="petName">Pet Name</label>
+                <br />
+                <input type="text" id="petName" name="petName" required>
+                <br />
+                <br />
+                <label>Select Pet Breed</label>
+                <br />
+                @Html.DropDownList("petBreed", new SelectList(new[]{"Pomeranian",
+                    "Bulldog", "British Shorthair","Siamese",
+                    "German Shepherd", "Golden Retriever","Poodle",
+                    "Husky", "Pug","Sphynx",
+                    "Munchkin", "Chihuahua"}))
+                <br />
+                <br />
+                <hr>
+                <h4>Pet Vaccination Details</h4>
+                <br />
+                <label>Is your pet vaccinated?</label>
+                <br />
+                @Html.DropDownList("vaccination", new SelectList(new[] { "Yes", "No" }))
+                <br />
+                <br />
+                <label>If your pet is vaccinated please fill out the form below</label>
+                <br />
+                <label>Year</label>
+                @Html.DropDownList("year", Enumerable.Range(1990, 2022).Select(i => new SelectListItem
+           { Text = i.ToString(), Value = i.ToString() }))
+                <label>Month</label>
+                @Html.DropDownList("month", new SelectList(new[]{"January",
+                    "February", "March","April",
+                    "May", "June","July",
+                    "August", "September","October",
+                    "November", "December"}))
+                <label>Date</label>
+                @Html.DropDownList("day", Enumerable.Range(1, 31).Select(i => new SelectListItem
+                { Text = i.ToString(), Value = i.ToString() }))
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group"method="post">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add Pet" class="btn btn-default" />
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back To Home", "Index", "Home", Model, null)
+</div>

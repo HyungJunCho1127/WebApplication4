@@ -2,8 +2,9 @@
 
 @{
     ViewBag.Title = "PetAdded";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-@using (Html.BeginForm("PetAdded", "Home", Model))
+@using (Html.BeginForm("PetAdded", "Pet", Model))
 
 {<div>
 
@@ -19,11 +20,9 @@
             <br />
 
 
-
+        </dl>
     </div>
+   
 
+}
 
-
-
-}</dl>
-</div>

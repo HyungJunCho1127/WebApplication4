@@ -1,0 +1,36 @@
+﻿@model WebApplication4.Models.User
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+}
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+
+        <h2>Admin Page</h2>
+        <body>
+
+            <label>User Name : </label>
+            @Html.DisplayFor(model => model.UserName)
+            <br />
+            <label>Email : </label>
+            @Html.DisplayFor(model => model.Email)
+            <br />
+
+            <br />
+            @Html.ActionLink("View all Users", "UserList", "Admin", Model, null)
+            <br />
+            @Html.ActionLink("Email all Users", "AdminEmail", "Admin", Model, null)
+            <br />
+        </body>
+
+
+    </dl>
+</div>
+
+
+    

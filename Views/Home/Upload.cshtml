@@ -2,41 +2,43 @@
 
 @{
     ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
 @using (Html.BeginForm("FileUpload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 
 {<div>
 
-        <hr />
-        <dl class="dl-horizontal">
+    <hr />
+    <dl class="dl-horizontal">
 
-            <h2>Upload Vaccination Documents</h2>
-            <body>
+        <h2>Upload Vaccination Documents</h2>
+        <body>
+            <br />
+            <label>User ID</label>
+            @Html.DisplayFor(model => model.Id)
+            <label>User Name : </label>
+            @Html.DisplayFor(model => model.UserName)
+            <br />
+            <label>Email : </label>
+            @Html.DisplayFor(model => model.Email)
+            <br />
+            <div class="form-group">
+                Upload<br />
+
+                <input type="file" name="ImageFile" id="imgid" style="width: 100%;" />
                 <br />
-                <label>User ID</label>
-                @Html.DisplayFor(model => model.Id)
-                <label>User Name : </label>
-                @Html.DisplayFor(model => model.UserName)
-                <br />
-                <label>Email : </label>
-                @Html.DisplayFor(model => model.Email)
-                <br />
-                <div class="form-group">
-                    Upload<br />
+                <input type="submit" name="FileUpload" value="Upload" class="submit" />
+            </div>
 
-                    <input type="file" name="ImageFile" id="imgid" style="width: 100%;" />
-                    <br />
-                    <input type="submit" name="FileUpload" value="Upload" class="submit" />
-                </div>
-
-            </body>
+        </body>
 
 
-
-    </div>
+    </dl>
+</div>
+    
     <br />
     @Html.ActionLink("Back to home", "Index", "Home", Model, null)
 
-}</dl>
-</div>
+}
+

@@ -1,0 +1,39 @@
+﻿@model WebApplication4.Models.User
+@{
+    ViewBag.Title = "BarChart";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2>PieChart</h2>
+<div class="row">
+    <div class="col-md-6">
+        <h5>Pie Chart</h5>
+        <div>
+            <canvas id="myPieChart"></canvas>
+        </div>
+    </div>
+
+
+</div>
+<br />
+@Html.ActionLink("Back To Home", "Index", "Home", Model, null)
+<br />
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script type="text/javascript">
+
+        $(function () {
+
+            var ctx = document.getElementById("myPieChart").getContext('2d');
+
+            var myPieChart = new Chart(ctx, {
+
+                type: 'pie',
+                data: @Html.Raw(Json.Encode(Model.PieChartData)),  
+            });
+        });
+
+    </script>
+
+}

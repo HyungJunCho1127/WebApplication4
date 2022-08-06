@@ -1,0 +1,23 @@
+﻿@model WebApplication4.Models.User
+
+@{
+    ViewBag.Title = "RateRoyaltyVets";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2>Rate Royalty Vets</h2>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+<body>
+    @using (Html.BeginForm("RoyaltyVetsRate", "Vet", Model, FormMethod.Post, null))
+    {
+        @Html.DropDownList("rating",
+        Enumerable.Range(1, 10).Select(i => new SelectListItem
+        { Text = i.ToString(), Value = i.ToString() }),
+        new { placeholder = Html.DisplayNameFor(model => model.VetRating), @class = "form-control" })
+        @Html.TextBox("button", "Submit Rating", new { Type = "submit" })
+    }
+</body>
+</html>

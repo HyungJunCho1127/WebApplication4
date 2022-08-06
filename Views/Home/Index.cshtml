@@ -2,38 +2,56 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
 }
-
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-style: double;
+    }
+    th, td {
+        background-color: #DCDCDC;
+        padding: 5px;
+    }
+</style>
 <div>
+    <body>
+        <hr />
+        
 
-    <hr />
-    <dl class="dl-horizontal">
+            <h2>Home Page</h2>
 
-        <h2>Home Page</h2>
-        <body>
 
-            <label>User Name : </label>
+            <label>Welcome </label>
             @Html.DisplayFor(model => model.UserName)
             <br />
-            <label>Email : </label>
-            @Html.DisplayFor(model => model.Email)
+            <table style="width:100%">
+                <thread>
+                    <tr>
+                        <th> Pet Name </th>
+                        <th> Pet Breed </th>
+                        <th> Pet Vaccination </th>
+                        <th> Pet Vaccination Date </th>
+                    </tr>
+                </thread>
+                <tbody>
+                    @foreach (var item in Model.List)
+                    {
+                        <tr>
+                            <td>@item.PetName</td>
+                            <td>@item.PetBreed</td>
+                            <td>@item.Vaccination</td>
+                            <td>@item.VaccinationDate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
             <br />
+    </body>
 
 
-            <br />
-            @Html.ActionLink("Add Pets", "AddPets", "Home", Model, null)
-            <br />
-            @Html.ActionLink("Upload Vaccination Document", "Upload", "Home", Model, null)
-            <br />
-            @Html.ActionLink("Get Vaccination Document", "Email", "Home", Model, null)
-            <br />
-            @Html.ActionLink("View Pet Breeds", "PieChart", "Home")
-            <br />
-
-        </body>
-
-
-    </dl>
+    
 </div>
 
 

@@ -1,0 +1,20 @@
+﻿@model WebApplication4.Models.User
+
+@{
+    ViewBag.Title = "BookRoyaltyVets";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2>Email Royalty Vets</h2>
+
+<html>
+<body>
+    @using (Html.BeginForm("BookRoyaltyVetEmail", "Vet", FormMethod.Post, Model))
+    {
+        @Html.TextArea("emailBody", new { @class = "form-control", @rows = 20, @columns = 10 })
+        <br />
+        @Html.TextBox("button", "Send Email", new {Type="submit"})
+    }
+</body>
+@Html.ActionLink("Back To Home", "Index", "Home", Model, null)
+</html>

@@ -1,6 +1,7 @@
-﻿@model WebApplication4.Models.HomeIndexVM
+﻿@model WebApplication4.Models.User
 @{
     ViewBag.Title = "PieChart";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
 <h2>PieChart</h2>
@@ -15,7 +16,7 @@
 
 </div>
 <br />
-@Html.ActionLink("Back To Home", "Index", "Home", null,null)
+@Html.ActionLink("Back To Home", "Index", "Home", Model, null)
 <br />
 
 @section Scripts {
@@ -28,7 +29,7 @@
 
             var myPieChart = new Chart(ctx, {
 
-                type: 'pie',
+                type: 'bar',
                 data: @Html.Raw(Json.Encode(Model.PieChartData)),  
             });
         });

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model WebApplication4.Models.User
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -17,12 +18,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("PetsaGram", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Create New Account", "Create", "Account")</li>
-                    <li>@Html.ActionLink("Log in", "Login", "Account")</li>
+                    <li>@Html.ActionLink("Pets", "Index", "Pet", Model, null)</li>
+                    <li>@Html.ActionLink("Vets", "Index", "Vet", Model, null)</li>
+                    <li>@Html.ActionLink("Log Out", "Login", "Account", Model, null)</li>
                 </ul>
             </div>
         </div>

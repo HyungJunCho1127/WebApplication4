@@ -1,0 +1,141 @@
+﻿@model WebApplication4.Models.User
+
+@{
+    ViewBag.Title = "Vet";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+<body>
+    <h1>Royalty Vets</h1>
+    <div style="display:inline-block;vertical-align:top;">
+        <img src="~/image/royaltyvets.png">
+    </div>
+    <div style="display:inline-block;">
+        <p>
+            @Html.ActionLink("Email for Booking with this veterinarian", "BookRoyaltyVets", "Vet", Model, null)
+            <br />
+            <br />
+            Monday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7am - 6pm
+            <br />
+            Tuesday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 7am - 6pm
+            <br />
+            Wednesday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  7am - 6pm
+            <br />
+            Thursday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 7am - 10pm
+            <br />
+            Friday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7am - 6pm
+            <br />
+            Saturday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9am - 7pm
+            <br />
+            Sunday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  9am - 2pm
+            <br />
+            <h4>Current Vet Rating</h4>
+            @Html.DisplayFor(model => model.RoyaltyVets)
+            <br />
+            @Html.ActionLink("Rate this veterinarian", "RateRoyaltyVets", "Vet", Model, null)
+        </p>
+    </div>
+    <hr>
+    <div></div>
+    <h1>Pet Vet Club</h1>
+    <div style="display:inline-block;vertical-align:top;">
+        <img src="~/image/petvetclub.png">
+    </div>
+    <div style="display:inline-block;">
+        <p>
+            @Html.ActionLink("Email for Booking with this veterinarian", "BookPetVetClub", "Vet", Model, null)
+            <br />
+            <br />
+            Monday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9am - 5pm
+            <br />
+            Tuesday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 9am - 5pm
+            <br />
+            Wednesday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  9am - 5pm
+            <br />
+            Thursday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 9am - 7pm
+            <br />
+            Friday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9am - 5pm
+            <br />
+            Saturday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9am - 5pm
+            <br />
+            Sunday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  9am - 5pm
+            <br />
+            <h4>Current Vet Rating</h4>
+            @Html.DisplayFor(model => model.PetVetClub)
+            <br />
+            @Html.ActionLink("Rate this veterinarian", "RatePetVetClub", "Vet", Model, null)
+        </p>
+    </div>
+    <hr>
+    <div></div>
+    <h1>Care Veterinary</h1>
+    <div style="display:inline-block;vertical-align:top;">
+        <img src="~/image/carevet.png">
+    </div>
+    <div style="display:inline-block;">
+        <p>
+            @Html.ActionLink("Email for Booking with this veterinarian", "BookCareVeterinary", "Vet", Model, null)
+            <br />
+            <br />
+            Monday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8am - 5pm
+            <br />
+            Tuesday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 8am - 5pm
+            <br />
+            Wednesday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  8am - 5pm
+            <br />
+            Thursday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 8am - 8pm
+            <br />
+            Friday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8am - 5pm
+            <br />
+            Saturday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10am - 4pm
+            <br />
+            Sunday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  10am - 4pm
+            <br />
+            <h4>Current Vet Rating</h4>
+            @Html.DisplayFor(model => model.CareVeterinary)
+            <br />
+            @Html.ActionLink("Rate this veterinarian", "RateCareVeterinary", "Vet", Model, null)
+        </p>
+    </div>
+    <hr>
+    <div></div>
+    <h1>Pet Vet Clinic</h1>
+    <div style="display:inline-block;vertical-align:top;">
+        <img src="~/image/petvetclinic.png">
+    </div>
+    <div style="display:inline-block;">
+        <p>
+            @Html.ActionLink("Email for Booking with this veterinarian", "BookPetVetClinic", "Vet", Model, null)
+            <br />
+            <br />
+            Monday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6am - 5pm
+            <br />
+            Tuesday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 6am - 5pm
+            <br />
+            Wednesday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  6am - 5pm
+            <br />
+            Thursday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 6am - 8pm
+            <br />
+            Friday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6am - 5pm
+            <br />
+            Saturday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7am - 4pm
+            <br />
+            Sunday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  8am - 4pm
+            <br />
+            <h4>Current Vet Rating</h4>
+            @Html.DisplayFor(model => model.PetVetClinic)
+            <br />
+            @Html.ActionLink("Rate this veterinarian", "RatePetVetClinic", "Vet", Model, null)
+        </p>
+    </div>
+    <div></div>
+    <hr>
+    <br />
+    @Html.ActionLink("Back to home", "Index", "Home", Model, null)
+</body>
+</html>
+

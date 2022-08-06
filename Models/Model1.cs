@@ -23,6 +23,5 @@ namespace WebApplication4.Models
 
         public System.Data.Entity.DbSet<WebApplication4.Models.User> Users { get; set; }
 
-        public System.Data.Entity.DbSet<WebApplication4.Models.Pet> Pets { get; set; }
     }
 }

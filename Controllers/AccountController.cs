@@ -5,16 +5,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using WebApplication4.Models;
 
 namespace WebApplication4.Controllers
 {
     public class AccountController : Controller
     {
-        // GET: Home
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         // GET: Home/Create
         public ActionResult Create()
@@ -41,16 +37,15 @@ namespace WebApplication4.Controllers
                 String email = collection[2];
                 String password = collection[3];
 
-                using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
-                        C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;Multipl
-                            eActiveResultSets=True;Application Name=EntityFramework"))
+                using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"))
                 {
-                    String query = "INSERT INTO Account (Username,Password, Email) VALUES (@Username,@Password, @Email)";
+                    String query = "INSERT INTO Account (Username,Password, Email, UserType) VALUES (@Username,@Password, @Email, @UserType)";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Username", username);
                         command.Parameters.AddWithValue("@Email", email);
                         command.Parameters.AddWithValue("@Password", password);
+                        command.Parameters.AddWithValue("@UserType", "User");
                         connection.Open();
                         int result = command.ExecuteNonQuery();
                         // Check Error
@@ -60,6 +55,7 @@ namespace WebApplication4.Controllers
                 }
                 int userId = GetUserID(username, password);
                 user.Id = userId;
+                user.List = new List<PetModel>();
                 return View("~/Views/Home/Index.cshtml", user);
             }
             catch
@@ -100,27 +96,38 @@ namespace WebApplication4.Controllers
                     {
                         if (username == reader[1].ToString() && password == reader[2].ToString())
                         {
-                            user.Id = int.Parse(reader[0].ToString());
-                            user.UserName = collection[1];
-                            user.Password = collection[2];
-                            user.Email = reader[3].ToString();
-                            HomeController home = new HomeController();
-                            Models.ViewModel viewModel = new Models.ViewModel(user, null);
-                            view = View("~/Views/Home/Index.cshtml", user);
+                            if (reader[4].ToString() == "User")
+                            {
+                                user.Id = int.Parse(reader[0].ToString());
+                                user.UserName = collection[1];
+                                user.Email = reader[3].ToString();
+                                user.List = GetPetsList(user.Id);
+                                view = View("~/Views/Home/Index.cshtml", user);
+                            }
+
+                            if (reader[4].ToString() == "Admin")
+                            {
+                                user.Id = int.Parse(reader[0].ToString());
+                                user.UserName = collection[1];
+                                user.Email = reader[3].ToString();
+                                view = View("~/Views/Admin/Index.cshtml", user);
+                            }
 
                         } else
                         {
                         }
+      
                     }
                     else
                     {
                         // THIS ONE!!!!!
-                        view = View("LoginFailed");
+                        return View("LoginFailed");
                     }
                 }
                 catch
                 {
                 }
+                
                 return view;
 
             }
@@ -168,6 +175,52 @@ namespace WebApplication4.Controllers
             {
                 return userId;
             }
+        }
+
+        public List<PetModel> GetPetsList(int id)
+        {
+            string name = " ";
+            string breed = " ";
+            string vacc = "";
+            string date = "";
+            List<PetModel> list = new List<PetModel>();
+            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=
+            C:\Users\davch\source\repos\WebApplication4\App_Data\Database1.mdf;Integrated Security=True;
+            MultipleActiveResultSets=True;Application Name=EntityFramework");
+            String query = "SELECT * FROM Pets WHERE Id = \'" + id + "\'";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                SqlDataReader reader;
+                try
+                {
+                    connection.Open();
+                    reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    { 
+                        name = reader["PetName"].ToString();
+                        breed = reader["PetBreed"].ToString();
+                        if (reader["FirstVaccination"].ToString() == "No")
+                        {
+                            vacc = "";
+                            date = "";
+                        } else
+                        {
+                            vacc = reader["FirstVaccination"].ToString();
+                            date = reader["FirstVaccinationDate"].ToString();
+                         
+                        }
+
+                        PetModel details = new PetModel(name, breed, vacc, date);
+                        list.Add(details);
+                    }
+
+                }
+                catch
+                {
+                }
+            }
+            return list;
         }
     } 
 }

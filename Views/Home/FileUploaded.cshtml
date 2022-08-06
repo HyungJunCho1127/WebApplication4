@@ -2,28 +2,29 @@
 
 @{
     ViewBag.Title = "FileUploaded";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-@using (Html.BeginForm("FileUploaded", "Home", Model))
+@using (Html.BeginForm("EmailSent", "Home", Model))
+{
+<div>
 
-{<div>
+    <hr />
+    <dl class="dl-horizontal">
 
-        <hr />
-        <dl class="dl-horizontal">
-
-            <h2>Files Uploaded</h2>
-            <body>
-                <br />
-                @Html.ActionLink("Back To Home", "Index", "Home")
-                <br />
-            </body>
-                <br />
+        <h2>Files Uploaded</h2>
+        <body>
+            <br />
+            @Html.ActionLink("Back To Home", "Index", "Home", Model, null)
+            <br />
+        </body>
+        <br />
 
 
-
-                </div>
-
+    </dl>
+</div>               
+}
             
 
 
-}</dl>
-</div>
+
+

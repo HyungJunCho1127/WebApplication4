@@ -1,0 +1,44 @@
+﻿@model WebApplication4.Models.User
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+}
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+
+        <h2>Home Page</h2>
+        <body>
+
+            <label>User Name : </label>
+            @Html.DisplayFor(model => model.UserName)
+            <br />
+            <label>Email : </label>
+            @Html.DisplayFor(model => model.Email)
+            <br />
+
+            <br />
+            @Html.ActionLink("Add Pets", "AddPets", "Pet", Model, null)
+            <br />
+            @Html.ActionLink("View PetsaGram Breeds Bar graph", "BarChart", "Pet", Model, null)
+            <br />
+            @Html.ActionLink("Upload Vaccination Document", "Upload", "Home", Model, null)
+            <br />
+            @Html.ActionLink("Get Vaccination Document", "Email", "Home", Model, null)
+            <br />
+            @Html.ActionLink("View PetsaGram Vaccination Pie Chart", "BarChart", "Pet", Model, null)
+            <br />
+            @Html.ActionLink("View Partnered Vets", "Vet", "Vet", Model, null)
+            <br />
+        </body>
+
+
+    </dl>
+</div>
+
+
+    

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
@@ -77,22 +79,18 @@ namespace WebApplication4.Controllers
                 ViewData["Password"] = collection[2];
                 string username = collection[1];
                 string password = collection[2];
-
                 Connection connectionString = new Connection();
                 SqlConnection connection = new SqlConnection(connectionString.GetConnection());
-
                 string query = "SELECT * FROM Account WHERE Username = @username AND Password = @password";
                 // using parameters add with value to protect against SQL injection
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@username", username);
                 command.Parameters.AddWithValue("@password", password);
                 SqlDataReader reader;
-
                 try
                 {
                     connection.Open();
                     reader = command.ExecuteReader();
-
                     if (reader.Read())
                     {
                         if (username == reader[1].ToString() && password == reader[2].ToString())
@@ -105,7 +103,6 @@ namespace WebApplication4.Controllers
                                 user.List = GetPetsList(user.Id);
                                 view = View("~/Views/Home/Index.cshtml", user);
                             }
-
                             if (reader[4].ToString() == "Admin")
                             {
                                 user.Id = int.Parse(reader[0].ToString());
@@ -114,24 +111,19 @@ namespace WebApplication4.Controllers
                                 user.UserList = GetUserList();
                                 view = View("~/Views/Admin/Index.cshtml", user);
                             }
-
                         } else
                         {
                         }
-      
                     }
                     else
                     {
-                        // THIS ONE!!!!!
                         return View("LoginFailed");
                     }
                 }
                 catch
                 {
                 }
-                
                 return view;
-
             }
             catch
             {
@@ -143,6 +135,65 @@ namespace WebApplication4.Controllers
         public ActionResult LoginFailed()
         {
             return View("LoginFailed");
+        }
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        public ActionResult Password(string userName)
+        {
+            string email = "";
+            string password = "";
+            Connection connectionString = new Connection();
+            SqlConnection connection = new SqlConnection(connectionString.GetConnection());
+
+            string query = "SELECT * FROM Account WHERE Username = @username";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@username", userName);
+            SqlDataReader reader;
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    if (userName == reader[1].ToString())
+                    {
+                        password = reader[2].ToString();
+                        email = reader[3].ToString();
+                    }
+                    else
+                    {
+                    }
+                }
+                else
+                {
+                }
+
+            }
+            catch
+            {
+
+            }
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("ito5032email@gmail.com");
+                mail.To.Add(email);
+                mail.Subject = "Password Reset for PetsaGram";
+                mail.Body = "<h1>Your Password is '" + password + "' + </h1>";
+                mail.IsBodyHtml = true;
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential("ito5032email@gmail.com", "namdbcfxkskxusht");
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+            }
+            return View("ForgotPasswordSent");
         }
 
         public int GetUserID(string userName, string password)

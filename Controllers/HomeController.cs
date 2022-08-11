@@ -12,6 +12,10 @@ namespace WebApplication4.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult Home()
+        {
+            return View();
+        }
         
         public ActionResult Index(Models.User user)
         {

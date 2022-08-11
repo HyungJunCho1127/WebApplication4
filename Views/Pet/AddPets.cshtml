@@ -40,7 +40,7 @@
                 <label>If your pet is vaccinated please fill out the form below</label>
                 <br />
                 <label>Year</label>
-                @Html.DropDownList("year", Enumerable.Range(1990, 2022).Select(i => new SelectListItem
+                @Html.DropDownList("year", Enumerable.Range(1990, 33).Select(i => new SelectListItem
            { Text = i.ToString(), Value = i.ToString() }))
                 <label>Month</label>
                 @Html.DropDownList("month", new SelectList(new[]{"January",

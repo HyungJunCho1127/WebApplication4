@@ -13,10 +13,14 @@
 <body>
     @using (Html.BeginForm("PetVetClubRate", "Vet", Model, FormMethod.Post))
     {
+        <label>Rate vet 1 to 10</label>
+        <br />
+        <label>10 being the highest score and 1 being the lowest score</label>
         @Html.DropDownList("rating",
         Enumerable.Range(1, 10).Select(i => new SelectListItem
         { Text = i.ToString(), Value = i.ToString() }),
         new { placeholder = Html.DisplayNameFor(model => model.VetRating), @class = "form-control" })
+        <hr />
         @Html.TextBox("button", "Submit Rating", new { Type = "submit" })
     }
 </body>

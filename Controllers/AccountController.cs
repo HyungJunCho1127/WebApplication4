@@ -77,22 +77,18 @@ namespace WebApplication4.Controllers
                 ViewData["Password"] = collection[2];
                 string username = collection[1];
                 string password = collection[2];
-
                 Connection connectionString = new Connection();
                 SqlConnection connection = new SqlConnection(connectionString.GetConnection());
-
                 string query = "SELECT * FROM Account WHERE Username = @username AND Password = @password";
                 // using parameters add with value to protect against SQL injection
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@username", username);
                 command.Parameters.AddWithValue("@password", password);
                 SqlDataReader reader;
-
                 try
                 {
                     connection.Open();
                     reader = command.ExecuteReader();
-
                     if (reader.Read())
                     {
                         if (username == reader[1].ToString() && password == reader[2].ToString())
@@ -105,7 +101,6 @@ namespace WebApplication4.Controllers
                                 user.List = GetPetsList(user.Id);
                                 view = View("~/Views/Home/Index.cshtml", user);
                             }
-
                             if (reader[4].ToString() == "Admin")
                             {
                                 user.Id = int.Parse(reader[0].ToString());
@@ -114,24 +109,19 @@ namespace WebApplication4.Controllers
                                 user.UserList = GetUserList();
                                 view = View("~/Views/Admin/Index.cshtml", user);
                             }
-
                         } else
                         {
                         }
-      
                     }
                     else
                     {
-                        // THIS ONE!!!!!
                         return View("LoginFailed");
                     }
                 }
                 catch
                 {
                 }
-                
                 return view;
-
             }
             catch
             {

@@ -15,6 +15,7 @@
         @Html.TextArea("emailBody", new { @class = "form-control", @rows = 20, @columns = 10 })
         <br />
         @Html.TextBox("button", "Send Email", new { Type = "submit" })
+        <hr />
     }
 </body>
 @Html.ActionLink("Back To Home", "Index", "Home", Model, null)
